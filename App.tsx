@@ -7,6 +7,7 @@ export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
+    // Camera permissions are still loading.
     return <View />;
   }
 
