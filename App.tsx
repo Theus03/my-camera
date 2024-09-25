@@ -1,23 +1,23 @@
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function App() {
-
   const [facing, setFacing] = useState<CameraType>('back');
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
-    return <View/>
+    return <View />;
   }
 
   if (!permission.granted) {
+    // Camera permissions are not granted yet.
     return (
       <View style={styles.container}>
-          <Text style={styles.message}>Nós precisamos da sua permissão para acessar a camera.</Text>
-          <Button onPress={requestPermission} title="Conceder Permissão"></Button>
+        <Text style={styles.message}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission} title="grant permission" />
       </View>
-    )
+    );
   }
 
   function toggleCameraFacing() {
@@ -25,15 +25,15 @@ export default function App() {
   }
 
   return (
-      <View>
-        <CameraView style={styles.camera} facing={facing}>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-              <Text style={styles.text}>Trocar Camera</Text>
-            </TouchableOpacity>
-          </View>
-        </CameraView>
-      </View>
+    <View style={styles.container}>
+      <CameraView style={styles.camera} facing={facing}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+            <Text style={styles.text}>Flip Camera</Text>
+          </TouchableOpacity>
+        </View>
+      </CameraView>
+    </View>
   );
 }
 
